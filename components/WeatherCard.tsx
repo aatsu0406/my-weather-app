@@ -1,9 +1,11 @@
 "use client";
 
 import { Cloud, Sun, Umbrella, Wind, Thermometer, Droplets } from 'lucide-react';
+import { WeatherState } from '@/types/weather';
+import { DetailItemProps } from '@/types/detailItem';
 
 interface WeatherCardProps {
-  weather: any;
+  weather: WeatherState | null;
 }
 
 export const WeatherCard = ({ weather }: WeatherCardProps) => {
@@ -52,7 +54,7 @@ export const WeatherCard = ({ weather }: WeatherCardProps) => {
 };
 
 // さらに小さいパーツ（湿度など）も分けておくと完璧！
-const DetailItem = ({ icon, label, value, isCenter }: any) => (
+const DetailItem = ({ icon, label, value, isCenter }: DetailItemProps) => (
   <div className={`flex items-center flex-col ${isCenter ? 'border-x border-slate-200 px-2' : ''}`}>
     <div className="flex items-center gap-1 mb-1">
       {icon}
