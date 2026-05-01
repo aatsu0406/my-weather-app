@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { SearchForm } from "@/components/SearchForm";
 import { WeatherCard } from "@/components/WeatherCard";
-import { WeatherState } from "@/types/weather";
+import { WeatherState, OpenWeatherData } from "@/types/weather";
 
 export default function Home() {
   const [inputCity, setInputCity] = useState("");
@@ -11,7 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
-  const fetchWeather = async (targetCity: string) => {
+  const fetchWeather = async (targetCity: string): Promise<void> => {
     if (!targetCity) return;
     try {
       setLoading(true);
@@ -37,7 +37,7 @@ export default function Home() {
       // STEP 2: 緯度・経度を使って「今の天気」を調べる（Current Weather API）
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ja`;
       const weatherResponse = await fetch(weatherUrl);
-      const weatherData = await weatherResponse.json();
+      const weatherData: OpenWeatherData = await weatherResponse.json();
 
       setWeather({ ...weatherData, display_name: japaneseName });
     } catch (error) {
@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50 p-8 flex flex-col items-center">
       <div className="bg-white p-6 rounded-3xl shadow-lg w-full max-w-sm">
-        
+
         {/* 検索窓（パーツ呼び出し） */}
         <SearchForm 
           inputCity={inputCity} 
@@ -70,7 +70,7 @@ export default function Home() {
         ) : (
           <WeatherCard weather={weather} />
         )}
-        
+
       </div>
     </main>
   );
