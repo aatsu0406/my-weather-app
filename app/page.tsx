@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { SearchForm } from "@/components/SearchForm";
 import { WeatherCard } from "@/components/WeatherCard";
+import { WeatherState } from "@/types/weather";
 
 export default function Home() {
   const [inputCity, setInputCity] = useState("");
-  const [weather, setWeather] = useState<any>(null);
+  const [weather, setWeather] = useState<WeatherState | null>(null);
   const [loading, setLoading] = useState(false);
   const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
